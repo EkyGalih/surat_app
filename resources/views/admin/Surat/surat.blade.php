@@ -1,6 +1,7 @@
 @extends('admin.index')
 @section('title', 'Surat Masuk')
-@section('menu-bidang', 'active')
+@section('menu-surat', 'pcoded-trigger complete active')
+@section('surat-masuk', 'active')
 @section('additional-css')
     <link rel="stylesheet" href="{{ asset('assets/Plugins/DataTables/datatables.css') }}">
 @endsection

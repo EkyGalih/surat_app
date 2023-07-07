@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapBidangAdmin();
         $this->mapSuratAdmin();
         $this->mapDistribusiAdmin();
+        $this->mapFileSuratAdmin();
     }
 
     public function mapApiRoutes()
@@ -73,5 +74,12 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin/distribusi.php'));
+    }
+
+    public function mapFileSuratAdmin()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/admin/filesurat.php'));
     }
 }
