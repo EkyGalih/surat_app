@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\Bidang;
 use App\Models\Surat;
 use Illuminate\Http\Request;
 
@@ -23,7 +25,10 @@ class SuratController extends Controller
      */
     public function create()
     {
-        //
+        $jenis_surat = Helpers::_jsonDecode('data/jenis_surat.json');
+        $bidang = Bidang::get();
+
+        return view('admin.Surat.components.add', compact('jenis_surat', 'bidang'));
     }
 
     /**
@@ -31,7 +36,7 @@ class SuratController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

@@ -18,6 +18,7 @@
 <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
 <script src="{{ asset('assets/js/demo-12.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+<script src="{{ asset('assets/Plugins/tinymce/tinymce.min.js') }}"></script>
 <script>
     var $window = $(window);
     var nav = $('.fixed-button');
@@ -27,6 +28,12 @@
         } else {
             nav.removeClass('active');
         }
+    });
+    $(function() {
+        $("[data-tooltip='tooltip']").tooltip();
+    });
+    tinymce.init({
+        selector: '.tinymce'
     });
 </script>
 @yield('additional-js')

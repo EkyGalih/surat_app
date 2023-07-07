@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "jenis_surat": "Biasa"
+    },
+    {
+        "id": 2,
+        "jenis_surat": "Undangan"
+    },
+    {
+        "id": 3,
+        "jenis_surat": "Disposisi"
+    }
+]

@@ -9,9 +9,8 @@
         <div class="card-header">
             <h5><i class="ti ti-envelope"></i> Surat Masuk</h5>
             <div class="card-header-right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddSurat"><i
-                        class="ti ti-plus"></i> Tambah Surat</button>
-                    @include('admin.Surat.addons._add')
+                <a href="{{ route('surat-admin.create') }}" class="btn btn-primary"><i
+                        class="ti ti-plus"></i> Tambah Surat</a>
             </div>
         </div>
         @if (Session::has('success'))
@@ -61,6 +60,17 @@
     <script>
         $(document).ready(function() {
             $('.surat').DataTable();
+        });
+
+        $('#jenis_surat').change(function() {
+            var jenis_surat = $('#jenis_surat').val();
+            console.log(jenis_surat);
+
+            if (jenis_surat == 'Disposisi') {
+                $('#disposisi').attr('hidden', false);
+            } else {
+                $('#disposisi').attr('hidden', true);
+            }
         });
     </script>
 @endsection
