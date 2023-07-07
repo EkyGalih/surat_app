@@ -3,7 +3,7 @@
     <div class="pcoded-inner-navbar main-menu">
         <div class="">
             <div class="main-menu-header">
-                <img class="img-40 img-radius" src="assets/images/avatar-4.jpg" alt="User-Profile-Image">
+                <img class="img-40 img-radius" src="{{ asset('assets/images/avatar-4.jpg') }}" alt="User-Profile-Image">
                 <div class="user-details">
                     <span>John Doe</span>
                     <span id="more-details">UX Designer<i class="ti-angle-down"></i></span>

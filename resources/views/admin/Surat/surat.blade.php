@@ -44,9 +44,21 @@
                                 <td>{{ $item->no_surat }}</td>
                                 <td>{{ $item->tgl_surat }}</td>
                                 <td>{{ $item->uraian }}</td>
-                                <td></td>
+                                <td>
+                                    @foreach ($item->Distribusi as $distribusi)
+                                    {{ '- '.$distribusi->Bidang->nama_bidang }} <br/>
+                                    @endforeach
+                                </td>
                                 <td>{{ $item->tanda_terima }}</td>
-                                <td></td>
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="{{ route('surat-admin.edit', $item->id) }}" data-tooltip="tooltip" data-placement="top" title="Ubah Data Surat">
+                                        <i class="ti ti-pencil"></i>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#HapusSurat{{ $loop->iteration }}" data-tooltip="tooltip" data-placement="top" title="Hapus Surat">
+                                        <i class="ti ti-trash"></i>
+                                    </button>
+                                    @include('admin.Surat.addons._delete')
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

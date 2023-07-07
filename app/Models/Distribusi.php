@@ -21,4 +21,14 @@ class Distribusi extends Model
             $model->id = (string)Uuid::generate(4);
         });
     }
+
+    public function Surat()
+    {
+        return $this->belongsTo(Surat::class);
+    }
+
+    public function Bidang()
+    {
+        return $this->belongsTo(Bidang::class);
+    }
 }

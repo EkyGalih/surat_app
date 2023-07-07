@@ -4,7 +4,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h5><i class="ti ti-plus"></i> Tambah Surat Masuk</h5>
+            <h5><i class="ti ti-pencil"></i> Ubah Surat Masuk</h5>
         </div>
         @if (Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -13,7 +13,7 @@
             </div>
         @endif
         <div class="card-block table-border-style" style="padding: 20px;">
-            <form method="POST" action="{{ route('surat-admin.store') }}" onsubmit="return validateForm()"
+            <form method="POST" action="{{ route('surat-admin.update', $surat->id) }}" onsubmit="return validateForm()"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
@@ -22,7 +22,7 @@
                         <select name="jenis_surat" class="form-control" id="jenis_surat" required>
                             <option value="">Pilih</option>
                             @foreach ($jenis_surat as $jenis)
-                                <option value="{{ $jenis['jenis_surat'] }}">{{ $jenis['jenis_surat'] }}</option>
+                                <option value="{{ $jenis['jenis_surat'] }}" {{ $surat->jenis_surat == $jenis['jenis_surat'] ? 'selected' : '' }}>{{ $jenis['jenis_surat'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -30,19 +30,19 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Dinas /Instansi</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="dinas" required>
+                        <input type="text" class="form-control" name="dinas" value="{{ $surat->dinas }}" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Tangggal Masuk</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" name="tgl_masuk" required>
+                        <input type="date" class="form-control" name="tgl_masuk" value="{{ Helpers::_resetTanggal($surat->tgl_masuk) }}" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">No. Surat</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="no_surat" required>
+                        <input type="text" class="form-control" name="no_surat" value="{{ $surat->no_surat }}" required>
                     </div>
                 </div>
                 <div class="form-group row">

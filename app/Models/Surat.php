@@ -11,4 +11,9 @@ class Surat extends Model
     public $incrementing = false;
     protected $table = 'surat';
     protected $guarded = ['created_at', 'updated_at'];
+
+    public function Distribusi()
+    {
+        return $this->hasMany(Distribusi::class);
+    }
 }
