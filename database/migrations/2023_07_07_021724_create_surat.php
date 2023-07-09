@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('surat', function (Blueprint $table) {
             $table->string('id', 40)->primary();
+            $table->enum('surat', ['masuk', 'keluar']);
             $table->string('dinas', 100);
             $table->string('tgl_masuk', 20);
             $table->string('no_surat', 50);

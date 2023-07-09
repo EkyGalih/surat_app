@@ -16,4 +16,9 @@ class Surat extends Model
     {
         return $this->hasMany(Distribusi::class);
     }
+
+    public function FileSurat()
+    {
+        return $this->hasOne(FileSurat::class);
+    }
 }

@@ -21,4 +21,9 @@ class FileSurat extends Model
             $model->id = (string)Uuid::generate(4);
         });
     }
+
+    public function Surat()
+    {
+        return $this->belongsTo(Surat::class);
+    }
 }

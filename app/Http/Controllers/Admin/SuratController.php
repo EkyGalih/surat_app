@@ -41,7 +41,7 @@ class SuratController extends Controller
     {
         $file       = $request->file('file_surat');
         $ext        = array('jpg', 'png', 'jpeg', 'PNG', 'JPG', 'JPEG');
-        $filename   = 'surat-'.$request->jenis_surat.md5($file->getClientOriginalName());
+        $filename   = 'surat '.$request->jenis_surat.' - '.md5($file->getClientOriginalName());
         $id         = (string)Uuid::generate(4);
 
         if (in_array($file->getClientOriginalExtension(), $ext)) {
@@ -61,6 +61,7 @@ class SuratController extends Controller
 
         Surat::create([
                     'id'            => $id,
+                    'surat'         => 'masuk',
                     'jenis_surat'   => $request->jenis_surat,
                     'dinas'         => $request->dinas,
                     'tgl_masuk'     => Helpers::_formatTanggal($request->tgl_masuk),
@@ -74,12 +75,13 @@ class SuratController extends Controller
             'surat_id' => $id,
             'file_surat' => $request->file_surat
         ]);
-
-        foreach ($request->distribusi as $distribusi) {
-            Distribusi::create([
-                'surat_id' => $id,
-                'bidang_id' => $distribusi
-            ]);
+        if ($request->distribusi != NULL) {
+            foreach ($request->distribusi as $distribusi) {
+                Distribusi::create([
+                    'surat_id' => $id,
+                    'bidang_id' => $distribusi
+                ]);
+            }
         }
 
         return redirect()->route('surat-admin.index')->with(['success' => 'Surat Masuk ditambahkan!']);

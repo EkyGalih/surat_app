@@ -1,6 +1,19 @@
 @extends('admin.index')
-@section('title', 'Surat Masuk')
-@section('menu-bidang', 'active')
+@section('title', 'Tambah Surat Masuk')
+@section('menu-surat', 'pcoded-trigger complete active')
+@section('surat-masuk', 'active')
+@section('additional-css')
+<style>
+    .image_upload>input {
+        display: none;
+    }
+
+    .images {
+        max-width: 100%;
+        max-height: auto;
+    }
+</style>
+@endsection
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -74,6 +87,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Distribusi Surat</label>
+                    <div class="col-sm-2">
+                        <input type="checkbox" id="distribusi_surat"> Ya
+                    </div>
+                </div>
+                <div class="form-group row" id="distribusi" hidden>
                     <label class="col-sm-3 col-form-label">Distribusi Ke</label>
                     <div class="col-sm-9">
                         @foreach ($bidang as $bid)
@@ -85,7 +104,15 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">File Surat</label>
                     <div class="col-sm-9">
-                        <input type="file" name="file_surat" class="form-control">
+                        <p class="image_upload">
+                            <label for="userImage">
+                                <a class="btn btn-primary btn-sm" rel="nofollow"><span
+                                        class='ti ti-upload'></span> Upload Surat</a>
+                            </label>
+                            <input type="file" name="file_surat" id="userImage" accept="image/*"
+                                onchange="loadFile(event)">
+                        </p>
+                        <img class="images" id="surat">
                     </div>
                 </div>
                 <div>
@@ -117,5 +144,24 @@
                 $('#disposisi').attr('hidden', true);
             }
         });
+
+        $('#distribusi_surat').click(function() {
+            if ($(this).is(":checked")) {
+                $('#distribusi').attr('hidden', false);
+                $('#distribusi_surat').text('Tidak');
+            } else {
+                $('#distribusi').attr('hidden', true);
+                $('#distribusi_surat').text('Ya');
+            }
+        });
+
+         // preview image
+         var loadFile = function(event) {
+            var output = document.getElementById('surat');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) // free memory
+            }
+        };
     </script>
 @endsection

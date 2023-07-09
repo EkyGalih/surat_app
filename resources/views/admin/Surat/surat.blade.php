@@ -30,7 +30,7 @@
                             <th>TGL. MASUK</th>
                             <th>NO.SURAT</th>
                             <th>TGL. SURAT</th>
-                            <th>URAIAN</th>
+                            <th style="max-width: 20%;">URAIAN</th>
                             <th>DILANJUTKAN KE SEKERTARIS BIDANG UPTB</th>
                             <th>TANDA TERIMA</th>
                             <th>Tools</th>
@@ -44,7 +44,7 @@
                                 <td>{{ $item->tgl_masuk }}</td>
                                 <td>{{ $item->no_surat }}</td>
                                 <td>{{ $item->tgl_surat }}</td>
-                                <td>{{ $item->uraian }}</td>
+                                <td style="max-width: 20%;">{!! $item->uraian !!}</td>
                                 <td>
                                     @foreach ($item->Distribusi as $distribusi)
                                     {{ '- '.$distribusi->Bidang->nama_bidang }} <br/>
