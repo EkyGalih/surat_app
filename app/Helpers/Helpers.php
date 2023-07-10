@@ -26,7 +26,7 @@ class Helpers
     // FUNGSI UNTUK MERUBAH FORMAT TANGGAL DARI MM/DD/YYYY KE YYYY-DD-MM //
     public static function _resetTanggal($tanggal) {
         $param = explode("/", $tanggal);
-        $data = $param[0].'/'.$param[1].'/'.$param[2];
+        $data = $param[2].'-'.$param[0].'-'.$param[1];
 
         return $data;
     }

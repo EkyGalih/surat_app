@@ -41,40 +41,42 @@ class SuratController extends Controller
     {
         $file       = $request->file('file_surat');
         $ext        = array('jpg', 'png', 'jpeg', 'PNG', 'JPG', 'JPEG');
-        $filename   = 'surat '.$request->jenis_surat.' - '.md5($file->getClientOriginalName());
+        $filename   = 'surat ' . $request->jenis_surat . ' - ' . md5($file->getClientOriginalName()) . '.png';
         $id         = (string)Uuid::generate(4);
 
         if (in_array($file->getClientOriginalExtension(), $ext)) {
             if ($file->getSize() <= 5000000) {
                 if ($request->jenis_surat == 'Undangan') {
                     $file->move('uploads/surat/undangan/', $filename);
-                    $request->file_surat = 'uploads/surat/undangan/'.$filename;
+                    $request->file_surat = 'uploads/surat/undangan/' . $filename;
                 } elseif ($request->jenis_surat == 'Biasa') {
                     $file->move('uploads/surat/biasa/', $filename);
-                    $request->file_surat = 'uploads/surat/biasa/'.$filename;
+                    $request->file_surat = 'uploads/surat/biasa/' . $filename;
                 } elseif ($request->jenis_surat == 'Disposisi') {
                     $file->move('uploads/surat/disposisi/', $filename);
-                    $request->file_surat = 'uploads/surat/disposisi/'.$filename;
+                    $request->file_surat = 'uploads/surat/disposisi/' . $filename;
                 }
             }
         }
 
         Surat::create([
-                    'id'            => $id,
-                    'surat'         => 'masuk',
-                    'jenis_surat'   => $request->jenis_surat,
-                    'dinas'         => $request->dinas,
-                    'tgl_masuk'     => Helpers::_formatTanggal($request->tgl_masuk),
-                    'no_surat'      => $request->no_surat,
-                    'tgl_surat'     => Helpers::_formatTanggal($request->tgl_surat),
-                    'uraian'        => $request->uraian,
-                    'tanda_terima'  => $request->penerima.', '.Helpers::_formatTanggal($request->tgl_terima)
+            'id'            => $id,
+            'surat'         => 'masuk',
+            'jenis_surat'   => $request->jenis_surat,
+            'dinas'         => $request->dinas,
+            'tgl_masuk'     => Helpers::_formatTanggal($request->tgl_masuk),
+            'no_surat'      => $request->no_surat,
+            'tgl_surat'     => Helpers::_formatTanggal($request->tgl_surat),
+            'uraian'        => $request->uraian,
+            'penerima'      => $request->penerima,
+            'tgl_terima'    => Helpers::_formatTanggal($request->tgl_terima)
         ]);
 
         FileSurat::create([
             'surat_id' => $id,
             'file_surat' => $request->file_surat
         ]);
+
         if ($request->distribusi != NULL) {
             foreach ($request->distribusi as $distribusi) {
                 Distribusi::create([
@@ -92,7 +94,9 @@ class SuratController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $surat = Surat::findOrFail($id);
+
+        return view('admin.Surat.components.show', compact('surat'));
     }
 
     /**
@@ -112,7 +116,59 @@ class SuratController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if ($request->file_surat != NULL) {
+            $file       = $request->file('file_surat');
+            $ext        = array('jpg', 'png', 'jpeg', 'PNG', 'JPG', 'JPEG');
+            $filename   = 'surat ' . $request->jenis_surat . ' - ' . md5($file->getClientOriginalName()) . '.png';
+            $filesurat = FileSurat::where('surat_id', '=', $id)->first();
+
+            if (in_array($file->getClientOriginalExtension(), $ext)) {
+                if ($file->getSize() <= 5000000) {
+                    unlink($filesurat->file_surat);
+                    if ($request->jenis_surat == 'Undangan') {
+                        $file->move('uploads/surat/undangan/', $filename);
+                        $request->file_surat = 'uploads/surat/undangan/' . $filename;
+                    } elseif ($request->jenis_surat == 'Biasa') {
+                        $file->move('uploads/surat/biasa/', $filename);
+                        $request->file_surat = 'uploads/surat/biasa/' . $filename;
+                    } elseif ($request->jenis_surat == 'Disposisi') {
+                        $file->move('uploads/surat/disposisi/', $filename);
+                        $request->file_surat = 'uploads/surat/disposisi/' . $filename;
+                    }
+                }
+            }
+        }
+
+        $surat = Surat::findOrFail($id);
+
+        $surat->update([
+            'jenis_surat'   => $request->jenis_surat,
+            'dinas'         => $request->dinas,
+            'tgl_masuk'     => Helpers::_formatTanggal($request->tgl_masuk),
+            'no_surat'      => $request->no_surat,
+            'tgl_surat'     => Helpers::_formatTanggal($request->tgl_surat),
+            'uraian'        => $request->uraian,
+            'penerima'      => $request->penerima,
+            'tgl_terima'    => Helpers::_formatTanggal($request->tgl_terima)
+        ]);
+
+        if ($request->file_surat != NULL) {
+            $filesurat = FileSurat::where('surat_id', '=', $id)->first();
+            $filesurat->update([
+                'file_surat' => $request->file_surat
+            ]);
+        }
+
+        if ($request->distribusi != NULL) {
+            foreach ($request->distribusi as $distribusi) {
+                Distribusi::create([
+                    'surat_id' => $id,
+                    'bidang_id' => $distribusi
+                ]);
+            }
+        }
+
+        return redirect()->route('surat-admin.index')->with(['success' => 'Surat Masuk diperbaharui!']);
     }
 
     /**
@@ -121,6 +177,8 @@ class SuratController extends Controller
     public function destroy(string $id)
     {
         $surat = Surat::findOrFail($id);
+        $filesurat = FileSurat::where('surat_id', '=', $id)->first();
+        unlink($filesurat->file_surat);
         $surat->delete();
 
         return redirect()->route('surat-admin.index')->with(['success' => 'Surat Masuk dihapus!']);

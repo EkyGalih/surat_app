@@ -50,7 +50,6 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Tangggal Masuk</label>
                     <div class="col-sm-9">
-                        {{ Helpers::_resetTanggal($surat->tgl_masuk) }}
                         <input type="date" class="form-control" name="tgl_masuk" value="{{ Helpers::_resetTanggal($surat->tgl_masuk) }}" required>
                     </div>
                 </div>
@@ -63,7 +62,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Tanggal Surat</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" name="tgl_surat" value="{{ $surat->tgl_surat }}" required>
+                        <input type="date" class="form-control" name="tgl_surat" value="{{ Helpers::_resetTanggal($surat->tgl_surat) }}" required>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -78,17 +77,14 @@
                         <textarea name="disposisi" class="tinymce">{{ $surat->disposisi }}</textarea>
                     </div>
                 </div>
-                @php
-                    $penerima = explode(",", $surat->tanda_terima);
-                @endphp
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Penerima/Tgl Terima</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" name="penerima" value="{{ $penerima[0] }}" placeholder="Nama Penerima Surat"
+                        <input type="text" class="form-control" name="penerima" value="{{ $surat->penerima }}" placeholder="Nama Penerima Surat"
                             required>
                     </div>
                     <div class="col-sm-4">
-                        <input type="date" class="form-control" name="tgl_terima" value="{{ $penerima[1] }}" required>
+                        <input type="date" class="form-control" name="tgl_terima" value="{{ Helpers::_resetTanggal($surat->tgl_terima) }}" required>
                     </div>
                 </div>
                 <div class="form-group row">

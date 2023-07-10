@@ -10,8 +10,7 @@
         <div class="card-header">
             <h5><i class="ti ti-envelope"></i> Surat Masuk</h5>
             <div class="card-header-right">
-                <a href="{{ route('surat-admin.create') }}" class="btn btn-primary"><i
-                        class="ti ti-plus"></i> Tambah Surat</a>
+                <a href="{{ route('surat-admin.create') }}" class="btn btn-primary"><i class="ti ti-plus"></i> Tambah Surat</a>
             </div>
         </div>
         @if (Session::has('success'))
@@ -30,7 +29,7 @@
                             <th>TGL. MASUK</th>
                             <th>NO.SURAT</th>
                             <th>TGL. SURAT</th>
-                            <th style="max-width: 20%;">URAIAN</th>
+                            <th style="max-width: 10%;">URAIAN</th>
                             <th>DILANJUTKAN KE SEKERTARIS BIDANG UPTB</th>
                             <th>TANDA TERIMA</th>
                             <th>Tools</th>
@@ -40,22 +39,36 @@
                         @foreach ($surat as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->dinas }}</td>
+                                <td>
+                                    <a href="{{ route('surat-admin.show', $item->id) }}" class="btn btn-link btn-md" data-toggle="">
+                                        {{ $item->dinas }}
+                                    </a>
+                                </td>
                                 <td>{{ $item->tgl_masuk }}</td>
-                                <td>{{ $item->no_surat }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-link btn-md" data-toggle="modal"
+                                        data-target="#ShowSurat{{ $loop->iteration }}" data-tooltip="tooltip"
+                                        data-placement="top" title="Lihat File Surat">
+                                        {{ $item->no_surat }}
+                                    </button>
+                                    @include('admin.Surat.addons._showSurat')
+                                </td>
                                 <td>{{ $item->tgl_surat }}</td>
-                                <td style="max-width: 20%;">{!! $item->uraian !!}</td>
+                                <td style="max-width: 10%;">{!! $item->uraian !!}</td>
                                 <td>
                                     @foreach ($item->Distribusi as $distribusi)
-                                    {{ '- '.$distribusi->Bidang->nama_bidang }} <br/>
+                                        {{ '- ' . $distribusi->Bidang->nama_bidang }} <br />
                                     @endforeach
                                 </td>
-                                <td>{{ $item->tanda_terima }}</td>
+                                <td>{{ $item->penerima . ', ' . $item->tgl_terima }}</td>
                                 <td>
-                                    <a class="btn btn-warning btn-sm" href="{{ route('surat-admin.edit', $item->id) }}" data-tooltip="tooltip" data-placement="top" title="Ubah Data Surat">
+                                    <a class="btn btn-warning btn-sm" href="{{ route('surat-admin.edit', $item->id) }}"
+                                        data-tooltip="tooltip" data-placement="top" title="Ubah Data Surat">
                                         <i class="ti ti-pencil"></i>
                                     </a>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#HapusSurat{{ $loop->iteration }}" data-tooltip="tooltip" data-placement="top" title="Hapus Surat">
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#HapusSurat{{ $loop->iteration }}" data-tooltip="tooltip"
+                                        data-placement="top" title="Hapus Surat">
                                         <i class="ti ti-trash"></i>
                                     </button>
                                     @include('admin.Surat.addons._delete')

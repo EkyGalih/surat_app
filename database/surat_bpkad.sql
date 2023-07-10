@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1deb5ubuntu1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 09, 2023 at 12:06 PM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Waktu pembuatan: 10 Jul 2023 pada 16.05
+-- Versi server: 8.0.33-0ubuntu0.22.04.3
+-- Versi PHP: 8.1.2-1ubuntu2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bpkad_surat`
+-- Database: `surat_bpkad`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `distribusi`
+-- Struktur dari tabel `distribusi`
 --
 
 CREATE TABLE `distribusi` (
@@ -38,7 +38,7 @@ CREATE TABLE `distribusi` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `file_surat`
+-- Struktur dari tabel `file_surat`
 --
 
 CREATE TABLE `file_surat` (
@@ -49,18 +49,10 @@ CREATE TABLE `file_surat` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `file_surat`
---
-
-INSERT INTO `file_surat` (`id`, `surat_id`, `file_surat`, `created_at`, `updated_at`) VALUES
-('9c275b1f-a952-4697-8dfa-48ff65f9d162', '3bfb0f52-b729-46f9-a0c7-e68fadfb870b', 'uploads/surat/biasa/surat Biasa - 3aac7dae52a8b62d6d47673d64b87267', '2023-07-09 03:19:25', '2023-07-09 03:19:25'),
-('d795d016-0cd1-48a5-a9f1-0139fb3c3406', 'cc09cbc3-31f8-4973-9c00-5c30e0d9a4de', 'uploads/surat/biasa/surat Biasa - 3aac7dae52a8b62d6d47673d64b87267', '2023-07-09 03:19:58', '2023-07-09 03:19:58');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -70,7 +62,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Dumping data untuk tabel `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -82,7 +74,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personal_access_tokens`
+-- Struktur dari tabel `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -101,7 +93,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `surat`
+-- Struktur dari tabel `surat`
 --
 
 CREATE TABLE `surat` (
@@ -110,29 +102,26 @@ CREATE TABLE `surat` (
   `dinas` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tgl_masuk` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `no_surat` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sifat` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'biasa',
+  `lampiran` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hal` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `tgl_surat` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `disposisi` text COLLATE utf8mb4_unicode_ci,
+  `isi_surat` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `uraian` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jenis_surat` enum('Biasa','Undangan','Disposisi') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tanda_terima` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jenis_surat` enum('biasa','undangan','disposisi') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `penerima` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tgl_terima` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `surat`
---
-
-INSERT INTO `surat` (`id`, `surat`, `dinas`, `tgl_masuk`, `no_surat`, `tgl_surat`, `disposisi`, `uraian`, `jenis_surat`, `tanda_terima`, `created_at`, `updated_at`) VALUES
-('3bfb0f52-b729-46f9-a0c7-e68fadfb870b', 'masuk', 'DPRD Provinsi NTB', '01/02/2023', '005/II/DPRD/2023', '01/02/2023', NULL, '<div>\r\n<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At voluptatem nam beatae error minus, minima nobis molestias totam voluptatum voluptate reprehenderit deleniti deserunt libero, laborum perspiciatis magnam sunt eveniet voluptas?\r\n<div>\r\n<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At voluptatem nam beatae error minus, minima nobis molestias totam voluptatum voluptate reprehenderit deleniti deserunt libero, laborum perspiciatis magnam sunt eveniet voluptas?</div>\r\n</div>\r\n</div>\r\n</div>', 'Biasa', 'as\'ad, 01/02/2023', '2023-07-09 03:19:24', '2023-07-09 03:19:24'),
-('cc09cbc3-31f8-4973-9c00-5c30e0d9a4de', 'masuk', 'DPRD Provinsi NTB', '01/02/2023', '005/II/DPRD/2023', '01/02/2023', NULL, '<div>\r\n<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At voluptatem nam beatae error minus, minima nobis molestias totam voluptatum voluptate reprehenderit deleniti deserunt libero, laborum perspiciatis magnam sunt eveniet voluptas?\r\n<div>\r\n<div>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At voluptatem nam beatae error minus, minima nobis molestias totam voluptatum voluptate reprehenderit deleniti deserunt libero, laborum perspiciatis magnam sunt eveniet voluptas?</div>\r\n</div>\r\n</div>\r\n</div>', 'Biasa', 'as\'ad, 01/02/2023', '2023-07-09 03:19:58', '2023-07-09 03:19:58');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `distribusi`
+-- Indeks untuk tabel `distribusi`
 --
 ALTER TABLE `distribusi`
   ADD PRIMARY KEY (`id`),
@@ -140,20 +129,20 @@ ALTER TABLE `distribusi`
   ADD KEY `distribusi_bidang_id_index` (`bidang_id`);
 
 --
--- Indexes for table `file_surat`
+-- Indeks untuk tabel `file_surat`
 --
 ALTER TABLE `file_surat`
   ADD PRIMARY KEY (`id`),
   ADD KEY `file_surat_surat_id_index` (`surat_id`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `personal_access_tokens`
+-- Indeks untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -161,42 +150,26 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indexes for table `surat`
+-- Indeks untuk tabel `surat`
 --
 ALTER TABLE `surat`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `personal_access_tokens`
+-- AUTO_INCREMENT untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `distribusi`
---
-ALTER TABLE `distribusi`
-  ADD CONSTRAINT `distribusi_ibfk_1` FOREIGN KEY (`surat_id`) REFERENCES `surat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `file_surat`
---
-ALTER TABLE `file_surat`
-  ADD CONSTRAINT `file_surat_ibfk_1` FOREIGN KEY (`surat_id`) REFERENCES `surat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -9,5 +9,6 @@ Route::group(['prefix' => 'surat'], function () {
     Route::post('store', [SuratController::class, 'store'])->name('surat-admin.store');
     Route::get('edit/{id}', [SuratController::class, 'edit'])->name('surat-admin.edit');
     Route::put('update/{id}', [SuratController::class, 'update'])->name('surat-admin.update');
+    Route::get('show/{id}', [SuratController::class, 'show'])->name('surat-admin.show');
     Route::get('destroy/{id}', [SuratController::class, 'destroy'])->name('surat-admin.destroy');
 });
